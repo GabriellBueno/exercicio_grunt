@@ -30,7 +30,7 @@ module.exports = function (grunt) {
                         },
                         {
                             match: 'ENDERECO_DO_JS',
-                            replacement: '../src/scripts/main.js'
+                            replacement: '../src/scripts/main.min.js'
                         },
                     ]
                 },
@@ -43,13 +43,21 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-        }
+        },
+        uglify:{
+                target:{
+                    files:{
+                        './dev/scripts/main.min.js': './src/scripts/main.js'
+                    }
+                }
+            }
     })
 
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-replace');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['less:development'], ['replace:dev']);
+    grunt.registerTask('build', ['less:development', 'replace:dev', 'uglify']);
 } 
